@@ -1,38 +1,38 @@
 import discord
-from discord.ext import commands, tasks
+from discord.ext import commands
 import requests
 import random
 import os
+import logging
 
+# Discord bot setup
 intents = discord.Intents.default()
 intents.message_content = True
 
-# Create bot instance with command prefix '!'
+# Create a bot instance
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Set up the GBIF API endpoint and parameters for moth occurrences with images
+# GBIF API parameters
 GBIF_ENDPOINT = "https://api.gbif.org/v1/occurrence/search"
-GBIF_PARAMS = {
-    "mediaType": "StillImage",
-    "taxonKey": "797",  # Lepidoptera taxon key
-    "limit": 100
-}
+GBIF_PARAMS = dict(mediaType="StillImage", taxonKey="797", limit=100)
 
 
 def get_random_moth():
+    """Get a random moth from the GBIF API.
+    Returns a tuple of the moth name and image URL."""
     try:
         # Make a request to the GBIF API
         response = requests.get(GBIF_ENDPOINT, params=GBIF_PARAMS)
         response.raise_for_status()  # Raise an exception for HTTP error codes
         results = response.json().get('results', [])
         if not results:
-            print("No results found in GBIF database.")
+            logging.error("No results found in GBIF database.")
             return None, None
 
         # Randomly select one of the results with an image
         valid_results = [result for result in results if 'media' in result and result['media']]
         if not valid_results:
-            print("No valid images found in the results.")
+            logging.error("No valid images found in the results.")
             return None, None
 
         selected_moth = random.choice(valid_results)
@@ -41,18 +41,20 @@ def get_random_moth():
 
         return moth_name, moth_image_url
     except requests.RequestException as e:
-        print(f"Request failed: {e}")
+        logging.error(f"Request failed: {e}")
         return None, None
 
 
 async def send_moth_of_the_day():
+    """Send the moth of the day to the Discord channel.
+    This function is called when the bot is ready."""
     channel_id = int(os.getenv('DISCORD_CHANNEL_ID'))
     channel = bot.get_channel(channel_id)
 
-    # Get a random moth occurrence with an image from the GBIF database
+    # Get a random moth from the GBIF API
     moth_name, moth_image_url = get_random_moth()
     if moth_name and moth_image_url:
-        # Send the moth image and name to the Discord channel
+        # Send the moth of the day as an embed
         embed = discord.Embed(title="Moth of the Day", description=moth_name)
         embed.set_image(url=moth_image_url)
         await channel.send(embed=embed)
@@ -63,8 +65,8 @@ async def send_moth_of_the_day():
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name}')
-    await send_moth_of_the_day()  # Send the moth of the day
-    await bot.close()  # Close the bot after sending the message
+    await send_moth_of_the_day()  # Send the moth of the day when the bot is ready
+    await bot.close() # Close the bot after sending the moth of the day
 
 
 bot.run(os.getenv('DISCORD_BOT_TOKEN'))
