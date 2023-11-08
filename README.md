@@ -50,7 +50,7 @@ To ensure that your bot operates correctly within your designated channel:
 ### Environment Variables
 
 - `DISCORD_BOT_TOKEN`: Your Discord bot token which you can get from the Discord developer portal.
-- `DISCORD_CHANNEL_ID`: The ID of the Discord channel where you want to post the moth images.d
+- `DISCORD_CHANNEL_ID`: The ID of the Discord channel where you want to post the moth images.
 
 ### Installing Dependencies
 
