@@ -11,14 +11,46 @@ The Global Biodiversity Information Facility (GBIF) is an international network 
 - Fetches random moth images and scientific names from GBIF.
 - Configurable for other "of the Day" features.
 - Daily posts to a Discord channel using automated scheduling.
+- 
 ## Setup
 
 To run this bot, you need to have Python 3.11 installed along with the `requests` and `discord.py` packages. The bot uses environment variables for configuration to keep sensitive information like the bot token and channel ID secure.
 
+### Discord Bot Setup Instructions
+Before running your "Moth of the Day" Discord bot, you'll need to set up a Discord application and bot, and then invite it to your server. Here's how you can do it:
+
+**Creating a Discord Application**
+1. Go to the [Discord Developer Portal](https://discord.com/build/app-developers).
+2. Click on the "New Application" button.
+3. Give your application a name and confirm the creation.
+4. Navigate to the "Bot" tab and click on "Add Bot".
+5. Here, you can set the bot's name and profile picture.
+
+**Getting Your Discord Bot Token**
+1. Under the bot's settings, you will find the token under the "TOKEN" section.
+2. Click "Copy" to copy your bot token and save it securely. You'll use this token as the DISCORD_BOT_TOKEN environment variable.
+3. Inviting Your Bot to a Server
+4. In the application's settings, navigate to the "OAuth2" tab.
+5. Under "Scopes," select "bot" to generate an invite link.
+6. In the "Bot Permissions" section, select the permissions your bot will need. For this aplication you will need 'Send Messages' and 'Embed Links' permissions.
+7. Copy the generated link and open it in your browser.
+8. Choose the server to invite your bot to and confirm.
+Make sure you have the required permissions on the Discord server to add a bot.
+
+**Adding the Bot to Your Channel**
+To ensure that your bot operates correctly within your designated channel:
+
+- The bot must have permission to view the channel where it will post the moth images.
+- The bot must also have permission to send messages and embed links in that channel.
+- Once you have completed these steps, your bot should be fully set up and operational within your Discord server. Follow the rest of the setup instructions to get your "Moth of the Day" bot running and configured with the environment variables.
+
+*Never share your bot token with anyone or publish it in a public place.*
+*Always use environment variables or secure app configuration services to handle tokens and other sensitive data.*
+
 ### Environment Variables
 
 - `DISCORD_BOT_TOKEN`: Your Discord bot token which you can get from the Discord developer portal.
-- `DISCORD_CHANNEL_ID`: The ID of the Discord channel where you want to post the moth images.
+- `DISCORD_CHANNEL_ID`: The ID of the Discord channel where you want to post the moth images.d
 
 ### Installing Dependencies
 
