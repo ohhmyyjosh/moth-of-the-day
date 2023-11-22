@@ -11,7 +11,7 @@ The Global Biodiversity Information Facility (GBIF) is an international network 
 - Fetches random moth images and scientific names from GBIF.
 - Configurable for other "of the Day" features.
 - Daily posts to a Discord channel using automated scheduling.
-- 
+  
 ## Setup
 
 To run this bot, you need to have Python 3.11 installed along with the `requests` and `discord.py` packages. The bot uses environment variables for configuration to keep sensitive information like the bot token and channel ID secure.
