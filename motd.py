@@ -55,11 +55,11 @@ async def send_moth_of_the_day():
     moth_name, moth_image_url = get_random_moth()
     if moth_name and moth_image_url:
         # Send the moth of the day as an embed
-        embed = discord.Embed(title="Moth of the Day", description=moth_name)
+        embed = discord.Embed(title="Lepidoptera of the Day", description=moth_name)
         embed.set_image(url=moth_image_url)
         await channel.send(embed=embed)
     else:
-        await channel.send("Could not retrieve the Moth of the Day. Please try again later.")
+        await channel.send("Could not retrieve the Lepidoptera of the Day. Please try again later.")
 
 
 @bot.event
